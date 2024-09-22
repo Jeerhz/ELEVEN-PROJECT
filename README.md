@@ -1,30 +1,58 @@
-This is a repository meant to facilitate our collaboration during a hackathon supervised by eleven-strategy data scientists.
-The main goal of the hackathon is to compete to predict the waiting after two hours in some attractions in an amusement park. The details are provided in the file pdf 'onboard'.
-The data at disposition are the waiting_times_test (and validation) files which includes logistic data and another file, "weather", which includes meteorological data.
+# The Endless Line Hackathon - README
 
+## Project Overview
 
-0) Preprocessing
+This repository contains the data and notebooks for the **The Endless Line Hackathon**, where participants are tasked with predicting waiting times at Euro-park, a global theme park. The goal is to leverage data science to improve visitor experience by accurately forecasting waiting times at key attractions, which in turn can help optimize the park's operations and KPIs.
 
-  The first difficulty is to use efficiently the data at disposition. We distinguished two main problems. First we must interpret the meaning of the lacking data in rain_1h snow_1h and in time_to_parade.
-  One should give a coherent value according to the approach chosen for those lacking values. The second one is the choice of the approach. The waiting_time in two hours looks particularly linked to the
-  current waiting time. This relation looks proportionnal after visualisation. However, it is not the case for any of the other value. One month may contains a period of holidays which leads to more visits
-  than the consecutive month. We may think that the time_to_parade data may have an impact when the show is close to the time studied. Finally what to do with the weather dataset ?
+## Challenge
 
-We focused on three main approaches:
+Participants are required to:
+- Model the waiting times at three key attractions in the park (Pirate Ship, Flying Coaster, Water Ride).
+- Predict the waiting time 2 hours in advance, utilizing historical data and additional features such as weather conditions.
+- Present their solution, including model development, data insights, and predictions, to a jury.
 
-1) Classification:
+The main deliverables are:
+1. A notebook with the code used to solve the problem.
+2. Predictions tested on a hidden test set and compared to other teams using the leaderboard.
 
-  We noticed that the waiting time was always between 0 and 90 minutes and always a multiple of five. Since our predictions must be accurate with a tolerance of five minutes, we decided to split the time into 90/5=18
-  intervals of five minutes.
-  After a OneHotEncoding of those class we arrive at a first satisfying result. We achieve a loss of 11,21 (RMSE) on the validation set with a RandomForest training.
+## Data
 
-2) Logistic Regression
+The following files are available for analysis:
 
-   We chose at this point to simplify the input data. For instance, we stopped using the weather dataset. We stopped using the season but only the months. However, we found on the litterature that in such,
-   cases we could use a cosinus function to insinuate the periodicity of temporal data. For exemple the output of 31 must be close to the output of 1 since the two days may be consecutive. This way we insist
-   on the similarity between two consecutive days. We howerver make a distinction between workdays and sunday and saturday for our model.
-   Finally we found better results after using an xgboost regressor with a loss value of 9,01 on the dataset.
+1. **`waiting_times_train.csv`**: Historical waiting times for the three attractions with 15-minute granularity.
+   - **WAIT_TIME_IN_2H**: The target variable representing the waiting time 2 hours ahead.
+   - Other features: `Datetime`, `Entity_description_short`, `Adjust_capacity`, `Downtime`, `Current_wait_time`, `Time_to_parade_1`, `Time_to_parade_2`, and `Night_show`.
 
- 3) Others
+2. **`waiting_times_X_test_val.csv`**: Validation set to test your model (without the target variable).
 
-  Many other approches and neaural networks method were tested which can be found in the "hackathon_arnaud" file
+3. **`weather.csv`**: Weather information at the park location, updated every 15 minutes.
+
+## Model Development
+
+Your task is to:
+- Explore the structure and trends in the provided data.
+- Develop a model to predict the waiting time 2 hours in advance using the training data.
+- Test your model using the validation set.
+- Make a final submission using the hidden test set for evaluation.
+
+The chosen evaluation metric is the **Root Mean Squared Error (RMSE)**.
+
+## Final Presentation
+
+Each team will present their work in front of a jury:
+- 5-minute pitch focusing on key components of your code.
+- Conclusions on the data structure and trends, along with the final model used.
+- A Q&A session with the jury.
+
+Two winners will be announced:
+1. Based on the leaderboard.
+2. Based on the richness and creativity of the approach.
+
+## Best Practices
+
+- Structure your notebook and presentation.
+- Focus on key insights and the most impactful parts of your solution.
+- Split the work between team members to optimize time.
+- Be honest about the challenges you encountered.
+
+Good luck and enjoy the hackathon!
